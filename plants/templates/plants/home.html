@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
+{% extends 'plants/base.html' %}
+
+{% block content %}
   <h1>GreenLeaf</h1>
   {% for post in posts %}
     <h1>{{ post.plant }}</h1>
-    <p>By {{ post.author }} on post.date</p>
+    <p>By {{ post.author }} on {{ post.date }}</p>
     <p>Watered? {{ post.watered }}</p>
   {% endfor %}
-</body>
-</html>
+{% endblock %}
