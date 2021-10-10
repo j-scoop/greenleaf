@@ -93,4 +93,4 @@ db.sqlite3
 # Additional files
 /venv
 .idea/
-profile_pics/
+media/
