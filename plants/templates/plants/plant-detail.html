@@ -1,0 +1,16 @@
+{% extends 'plants/base.html' %}
+
+{% block content %}
+  <h1>GreenLeaf</h1>
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ plant.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ plant.name }}</a>
+        <small class="text-muted">{{ plant.date_added|date:"M d, Y" }}</small>
+      </div>
+      <h2 class="article-title">{{ plant.plant }}</h2>
+      <p class="article-content">Watered? {{ plant.watered }}</p>
+    </div>
+  </article>
+{% endblock %}
