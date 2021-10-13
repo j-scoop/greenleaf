@@ -1,7 +1,6 @@
 {% extends 'plants/base.html' %}
 
 {% block content %}
-  <h1>GreenLeaf</h1>
   {% for plant in plants %}
     <article class="media content-section">
       <img class="rounded-circle article-img" src="{{ plant.image.url }}">
