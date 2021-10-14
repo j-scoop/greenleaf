@@ -8,6 +8,12 @@
       <div class="article-metadata">
         <a class="mr-2" href="#">{{ plant.name }}</a>
         <small class="text-muted">{{ plant.date_added|date:"M d, Y" }}</small>
+        {% if object.owner == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'plant-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'plant-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
       </div>
       <h2 class="article-title">{{ plant.plant }}</h2>
       <p class="article-content">Watered? {{ plant.watered }}</p>
