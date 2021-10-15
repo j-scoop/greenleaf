@@ -9,6 +9,7 @@ class PlantListView(ListView):
     template_name = "plants/home.html"
     context_object_name = 'plants'
     ordering = ['-date_added']
+    paginate_by = 2
 
 
 class PlantDetailView(DetailView):
