@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PlantListView, PlantDetailView, PlantCreateView, PlantUpdateView, PlantDeleteView
+from .views import PlantListView, PlantDetailView, PlantCreateView, PlantUpdateView, PlantDeleteView, UserPlantListView
 from . import views
 
 
@@ -10,4 +10,5 @@ urlpatterns = [
     path('plant/new/', PlantCreateView.as_view(), name='plant-create'),
     path('plant/<int:pk>/update/', PlantUpdateView.as_view(), name='plant-update'),
     path('plant/<int:pk>/delete/', PlantDeleteView.as_view(), name='plant-delete'),
+    path('user/<str:username>', UserPlantListView.as_view(), name='user-plants'),
 ]
