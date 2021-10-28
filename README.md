@@ -1,6 +1,7 @@
 # GreenLeaf - Plant Care
 
-GreenLeaf is a plant watering schedule app built using Django.
+GreenLeaf is a plant watering schedule app built using Django. You can use it to keep track of your plants, 
+simply add them to your profile and log their status, last watered and add any notes.
 
 ## Setup
 

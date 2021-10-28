@@ -1,11 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Plant
+from .models import Plant, PlantData
+from .forms import PlantEntryForm
 
 
 class PlantListView(ListView):
+    """List plants on homepage"""
     model = Plant
     template_name = "plants/home.html"
     context_object_name = 'plants'
@@ -14,6 +16,7 @@ class PlantListView(ListView):
 
 
 class UserPlantListView(ListView):
+    """List only the selected users plants"""
     model = Plant
     template_name = "plants/user_plants.html"
     context_object_name = 'plants'
@@ -25,12 +28,14 @@ class UserPlantListView(ListView):
 
 
 class PlantDetailView(DetailView):
+    """Show an individual plants attributes"""
     model = Plant
     template_name = "plants/plant_detail.html"
     context_object_name = 'plant'
 
 
 class PlantCreateView(LoginRequiredMixin, CreateView):
+    """Create a new plant object"""
     model = Plant
     # template_name = "plants/plant-form.html" ## Django automatically look for this filename
     fields = ['name', 'image']
@@ -41,6 +46,7 @@ class PlantCreateView(LoginRequiredMixin, CreateView):
 
 
 class PlantUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """Update an existing plant object's attributes"""
     model = Plant
     # template_name = "plants/plant-form.html" ## Django automatically look for this filename
     fields = ['name', 'image']
@@ -56,7 +62,33 @@ class PlantUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
 
 
+class PlantEntryView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """Add plant data e.g. when watered, notes, and new photos"""
+    template_name = 'plants/plant_entry_form.html'
+    model = PlantData
+    fields = ['date_watered', 'note']  #, 'photo']
+
+    def get_success_url(self):
+        return reverse('plant-detail', kwargs={'pk': self.kwargs.get('pk')})
+
+    def form_valid(self, form):
+        form.instance.plant = Plant.objects.get(id=self.kwargs.get('pk'))
+        return super().form_valid(form)  # run the form
+
+    def get_context_data(self, **kwargs):
+        # Pass the plant object to the template
+        context = super().get_context_data(**kwargs)
+        context['plant'] = Plant.objects.get(pk=self.kwargs['pk'])
+        return context
+
+    def test_func(self):
+        if self.request.user == Plant.objects.get(pk=self.kwargs['pk']).owner:
+            return True
+        return False
+
+
 class PlantDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """Delete an existing plant object"""
     model = Plant
     success_url = "/"
 
@@ -72,4 +104,5 @@ class PlantDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 def about(request):
+    """An about page"""
     return render(request, 'plants/about.html', {'title': 'About'})

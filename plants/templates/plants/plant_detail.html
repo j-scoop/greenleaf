@@ -19,7 +19,7 @@
         {% endif %}
       </div>
       <h2 class="article-title">{{ plant.plant }}</h2>
-      <p class="article-content">Watered? {{ plant.watered }}</p>
+      <p class="article-content">Watered? {{ object.plantdata_set.date_watered }}</p>
     </div>
   </article>
 {% endblock %}
