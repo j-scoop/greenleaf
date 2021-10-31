@@ -10,7 +10,7 @@
           <a class="mr-2" href="{% url 'user-plants' object.owner.username %}">{{ object.owner }}</a>
         </div>
         <a class="mr-2" href="#">{{ plant.name }}</a>
-        <small class="text-muted">{{ plant.date_added|date:"M d, Y" }}</small>
+        <small class="text-muted">Added {{ plant.date_added|date:"M d, Y" }}</small>
         {% if object.owner == user %}
           <div>
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'plant-update' object.id %}">Update</a>
@@ -19,7 +19,10 @@
         {% endif %}
       </div>
       <h2 class="article-title">{{ plant.plant }}</h2>
-      <p class="article-content">Watered? {{ object.plantdata_set.date_watered }}</p>
+      {% for entry in object.plantdata_set.all %}
+        <p class="article-content">Watered: {{ entry.date_watered }}</p>
+        <p class="article-content">{{ entry.note }}</p>
+      {% endfor %}
     </div>
   </article>
 {% endblock %}
