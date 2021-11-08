@@ -87,6 +87,22 @@ class PlantEntryView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return False
 
 
+class PlantEntryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """Delete an existing plant object"""
+    model = PlantData
+    success_url = "/"  # Change to plant detail page
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user  # set user as form author
+        return super().form_valid(form)  # run the form
+
+    def test_func(self):
+        plant = self.get_object()
+        if self.request.user == plant.owner:
+            return True
+        return False
+
+
 class PlantDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """Delete an existing plant object"""
     model = Plant

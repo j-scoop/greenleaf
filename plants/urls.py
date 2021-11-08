@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     PlantListView, PlantDetailView, PlantCreateView, PlantUpdateView, PlantDeleteView, UserPlantListView,
-    PlantEntryView
+    PlantEntryView, PlantEntryDeleteView
 )
 from . import views
 
