@@ -2,19 +2,25 @@
 
 {% block content %}
   <h1 class="mb-3">{{ view.kwargs.username }}'s plants</h1>
-  {% for plant in plants %}
-    <article class="media content-section">
-      <img class="rounded-circle article-img" src="{{ plant.image.url }}">
-      <div class="media-body">
-        <div class="article-metadata">
-          <a class="mr-2" href="{% url 'user-plants' plant.owner.username %}">{{ plant.owner }}</a>
-          <small class="text-muted">{{ plant.date_added|date:"M d, Y" }}</small>
-        </div>
-        <h2><a class="article-title" href="{% url 'plant-detail' plant.id %}">{{ plant.name }}</a></h2>
-        <p class="article-content">Watered? {{ plant.watered }}</p>
-      </div>
-    </article>
-  {% endfor %}
+  <div>
+  <ul class="row">
+    {% for plant in plants %}
+      <li class="plant-tile col-xs-12 col-sm-6 col-lg-4">
+        <article class="plant_pod">
+          <img class="rounded-circle article-img" src="{{ plant.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'user-plants' plant.owner.username %}">{{ plant.owner }}</a>
+              <small class="text-muted">{{ plant.date_added|date:"M d, Y" }}</small>
+            </div>
+            <h2><a class="article-title" href="{% url 'plant-detail' plant.id %}">{{ plant.name }}</a></h2>
+            <p class="article-content">Watered {{ plant.plantdata_set.all.0.date_watered }}</p>
+          </div>
+        </article>
+      </li>
+    {% endfor %}
+      </ul>
+  </div>
   {% if is_paginated %}
     {% if page_obj.has_previous %}
       <a class="btn btn-outline-info mb-4" href="?page=1">First</a>

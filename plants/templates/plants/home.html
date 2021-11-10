@@ -6,16 +6,20 @@
       {% for plant in plants %}
         <li class="plant-tile col-xs-12 col-sm-6 col-lg-4">
           <article class="plant_pod">
-            <img class="rounded-circle article-img" src="{{ plant.image.url }}">
-            <div class="media-body">
-              <div class="article-metadata">
-                <a class="mr-2" href="{% url 'user-plants' plant.owner.username %}">{{ plant.owner }}</a>
-                <small class="text-muted">{{ plant.date_added|date:"M d, Y" }}</small>
-              </div>
-              <h2><a class="article-title" href="{% url 'plant-detail' plant.id %}">{{ plant.name }}</a></h2>
-              <p class="article-content">Watered? {{ plant.watered }}</p>
+            <div class="image_container">
+              <a class="article-title" href="{% url 'plant-detail' plant.id %}">
+                <img class="thumbnail" src="{{ plant.image.url }}">
+              </a>
             </div>
           </article>
+          <div class="tile-text">
+            <div>
+              <a class="mr-2" href="{% url 'user-plants' plant.owner.username %}">{{ plant.owner }}</a>
+              <small class="text-muted">{{ plant.date_added|date:"M d, Y" }}</small>
+            </div>
+            <h2><a class="plant-title" href="{% url 'plant-detail' plant.id %}">{{ plant.name }}</a></h2>
+            <p class="plant-watered">Watered {{ plant.plantdata_set.all.0.date_watered }}</p>
+          </div>
         </li>
       {% endfor %}
     </ul>
