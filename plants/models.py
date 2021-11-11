@@ -37,7 +37,7 @@ class PlantData(models.Model):
     """A model for storing user entered data for a specific plant"""
     date_watered = models.DateTimeField(default=timezone.now)
     note = models.CharField(max_length=128)
-    photo = models.ImageField(upload_to='plant-pics/updates')
+    photo = models.ImageField(default='default-plant.png', upload_to='plant-pics/updates')
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
 
     # Tell django where to go after creation of a new Entry

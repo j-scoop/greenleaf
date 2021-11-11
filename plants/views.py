@@ -66,7 +66,7 @@ class PlantEntryView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Add plant data e.g. when watered, notes, and new photos"""
     template_name = 'plants/plant_entry_form.html'
     model = PlantData
-    fields = ['date_watered', 'note']  #, 'photo']
+    fields = ['date_watered', 'note', 'photo']
 
     def get_success_url(self):
         return reverse('plant-detail', kwargs={'pk': self.kwargs.get('pk')})
