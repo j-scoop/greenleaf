@@ -15,7 +15,7 @@ $ cd plant-tracker
 Create a virtual environment to install dependencies in and activate it:
 
 ```sh
-$ python -m venv /venv/
+$ python -m venv ./venv/
 $ venv/Scripts/activate.bat
 ```
 
